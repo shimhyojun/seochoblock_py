@@ -75,7 +75,7 @@ print(binance_balance.keys())
 @app.route('/upbit-privateapi/<user_id>',methods=['GET'])
 def Upbit_Apidb(user_id):
     dbModule = db.key_DB() 
-    sql="select access_key, private_key from upbits where id={}".format(user_id)
+    sql="select access_key, private_key from upbits where user_id={}".format(user_id)
     rows= dbModule.executeAll(sql)
     ccxt.upbit(config={ 
         'apiKey': rows['access_key'],        
