@@ -14,6 +14,7 @@ api = Api(app)
 markets = {}
 count = 1
 
+'''
 # mydb 내 upbit 데이터 사용
 @app.route('/upbitsApi')
 def Upbit_db():
@@ -23,7 +24,7 @@ def Upbit_db():
     rows = dbModule.executeAll(sql)
     
     return Response(json.dumps(rows), mimetype='application/json')
-
+'''
 
 # 거래소 openapi 
 
@@ -68,11 +69,13 @@ binance_balance= binance.fetch_balance()
 print(binance_balance.keys())
 '''
 
+
 #private api
+# 업비트
 @app.route('/upbit-privateapi/<user_id>',methods=['GET'])
 def Upbit_Apidb(user_id):
-    dbModule = db.upbit_DB() 
-    sql="select access_key, private_key from users where id={}".format(user_id)
+    dbModule = db.key_DB() 
+    sql="select access_key, private_key from upbits where id={}".format(user_id)
     rows= dbModule.executeAll(sql)
     ccxt.upbit(config={ 
         'apiKey': rows['access_key'],        
@@ -84,11 +87,52 @@ def Upbit_Apidb(user_id):
 
     return Response(json.dumps(rows), mimetype='application/json')
 
+# 바이낸스
+@app.route('/binance-privateapi/<user_id>',methods=['GET'])
+def Binance_Apidb(user_id):
+    dbModule = db.key_DB() 
+    sql="select access_key, private_key from binance where id={}".format(user_id)
+    rows= dbModule.executeAll(sql)
+    ccxt.upbit(config={ 
+        'apiKey': rows['access_key'],        
+        'secret': rows['private_key']         
+        }
+    )
+    balance= Binance_Apidb.fetch_balance()
+    print(balance)
+
+    return Response(json.dumps(rows), mimetype='application/json')
 
 
+# 빗썸
+@app.route('/bithumb-privateapi/<user_id>',methods=['GET'])
+def Bithumb_Apidb(user_id):
+    dbModule = db.key_DB() 
+    sql="select access_key, private_key from binance where id={}".format(user_id)
+    rows= dbModule.executeAll(sql)
+    ccxt.bithumb(config={ 
+        'apiKey': rows['access_key'],        
+        'secret': rows['private_key']         
+        }
+    )
+    balance= Bithumb_Apidb.fetch_balance()
+    print(balance)
 
+# 코인원
+@app.route('/coinone-privateapi/<user_id>',methods=['GET'])
+def Coinone_Apidb(user_id):
+    dbModule = db.key_DB() 
+    sql="select access_key, private_key from binance where id={}".format(user_id)
+    rows= dbModule.executeAll(sql)
+    ccxt.coinone(config={ 
+        'apiKey': rows['access_key'],        
+        'secret': rows['private_key']         
+        }
+    )
+    balance= Coinone_Apidb.fetch_balance()
+    print(balance)
 
-
+    return Response(json.dumps(rows), mimetype='application/json')
 
 
 if __name__ == '__main__':

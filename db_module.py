@@ -2,7 +2,7 @@ import pymysql
 
 
 # SQL에 데이터 정리
-class upbit_DB:
+class key_DB:
     def __init__(self):
         self.db = pymysql.connect(
             host='skuser35-mydb.cw2or7iuke4y.us-west-1.rds.amazonaws.com',
