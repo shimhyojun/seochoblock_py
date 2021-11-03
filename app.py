@@ -10,9 +10,6 @@ import json
 from flask import jsonify, render_template
 from datetime import datetime
 
-import time
-import threading
-import schedule
 import pymysql
 
 app = Flask(__name__)
@@ -86,13 +83,36 @@ def getPrice1():
    
 
 
-
-
-
-
 # 빗썸 OPEN
-@app.route('/bithumb-openapi',methods=['GET'])
-def getPrice2():
+# @app.route('/bithumb-openapi',methods=['GET'])
+# def getPrice2():
+#    bithumb= ccxt.bithumb()
+#    keyList = ['BTC/KRW','ETH/KRW']
+#    krwList = []
+   
+#    for i in range(len(keyList)):
+#        if '/KRW' in keyList[i]:
+#            krwList.append(keyList[i])
+#     bithumb_db = bithumb.fetch_tickers(symbols=krwList,params={})
+#     print(bithumb_db)
+#     BTCList = []
+
+#     for i in range(len(krwList)):
+#         name = krwList[i]
+#         Bithumb_T = (bithumb_db[name]['timestamp'])
+#         Bithumb_P = (bithumb_db[name]['info']['last'])
+
+#         Bithumb = {'trade_timestamp':Bithumb_T,'trade_price':Bithumb_P}
+#         BTCList.append(Bithumb)
+        
+#     try:
+#         return json.dumps(BTCList)
+#     except Exception as e:
+#         print(str(e))
+            
+#         return jsonify(str(e)) 
+
+        ''''''
     # bithumb = ccxt.bithumb()
     # keyList = ['BTC/KRW', 'ETH/KRW', 'LTC/KRW', 'ETC/KRW', 'XRP/KRW', 'BCH/KRW', 'QTUM/KRW', 'BTG/KRW', 'EOS/KRW', 'ICX/KRW', 'TRX/KRW', 'ELF/KRW', 'OMG/KRW', 'KNC/KRW', 'GLM/KRW', 'ZIL/KRW', 'WAXP/KRW', 'POWR/KRW', 'LRC/KRW', 'STEEM/KRW', 'STRAX/KRW', 'ZRX/KRW', 'REP/KRW', 'XEM/KRW', 'SNT/KRW', 'ADA/KRW', 'CTXC/KRW', 'BAT/KRW', 'WTC/KRW', 'THETA/KRW', 'LOOM/KRW', 'WAVES/KRW', 'TRUE/KRW', 'LINK/KRW', 'ENJ/KRW', 'VET/KRW', 'MTL/KRW', 'IOST/KRW', 'TMTG/KRW', 'QKC/KRW', 'HDAC/KRW', 'AMO/KRW', 'BSV/KRW', 'ORBS/KRW', 'TFUEL/KRW', 'VALOR/KRW', 'CON/KRW', 'ANKR/KRW', 'MIX/KRW', 'CRO/KRW', 'FX/KRW', 'CHR/KRW', 'MBL/KRW', 'MXC/KRW', 'FCT/KRW', 'TRV/KRW', 'DAD/KRW', 'WOM/KRW', 'SOC/KRW', 'EM/KRW', 'BOA/KRW', 'FLETA/KRW', 'SXP/KRW', 'COS/KRW', 'APIX/KRW', 'EL/KRW', 'BASIC/KRW', 'HIVE/KRW', 'XPR/KRW', 'VRA/KRW', 'FIT/KRW', 'EGG/KRW', 'BORA/KRW', 'ARPA/KRW', 'APM/KRW', 'CKB/KRW', 'AERGO/KRW', 'ANW/KRW', 'CENNZ/KRW', 'EVZ/KRW', 'CYCLUB/KRW', 'SRM/KRW', 'QTCON/KRW', 'UNI/KRW', 'YFI/KRW', 'UMA/KRW', 'AAVE/KRW', 'COMP/KRW', 'REN/KRW', 'BAL/KRW', 'RSR/KRW', 'NMR/KRW', 'RLC/KRW', 'UOS/KRW', 'SAND/KRW', 'GOM2/KRW', 'RINGX/KRW', 'BEL/KRW', 'OBSR/KRW', 'ORC/KRW', 'POLA/KRW', 'AWO/KRW', 'ADP/KRW', 'DVI/KRW', 'GHX/KRW', 'MIR/KRW', 'MVC/KRW', 'BLY/KRW', 'WOZX/KRW', 'ANV/KRW', 'GRT/KRW', 'MM/KRW', 'BIOT/KRW', 'XNO/KRW', 'SNX/KRW', 'RAI/KRW', 'COLA/KRW', 'NU/KRW', 'OXT/KRW', 'LINA/KRW', 'MAP/KRW', 'AQT/KRW', 'WIKEN/KRW', 'CTSI/KRW', 'MANA/KRW', 'LPT/KRW', 'MKR/KRW', 'SUSHI/KRW', 'ASM/KRW', 'PUNDIX/KRW', 'CELR/KRW', 'LF/KRW', 'ARW/KRW', 'MSB/KRW', 'RLY/KRW', 'OCEAN/KRW', 'BFC/KRW', 'ALICE/KRW', 'CAKE/KRW', 'BNT/KRW', 'XVS/KRW', 'CHZ/KRW', 'AXS/KRW', 'DAI/KRW', 'MATIC/KRW', 'BAKE/KRW', 'VELO/KRW', 'BCD/KRW', 'XLM/KRW', 'GXC/KRW', 'BTT/KRW', 'VSYS/KRW', 'IPX/KRW', 'WICC/KRW', 'ONT/KRW', 'LUNA/KRW', 'AION/KRW', 'META/KRW', 'KLAY/KRW', 'ONG/KRW', 'ALGO/KRW', 'JST/KRW', 'XTZ/KRW', 'MLK/KRW', 'WEMIX/KRW', 'DOT/KRW', 'ATOM/KRW', 'SSX/KRW', 'TEMCO/KRW', 'HIBS/KRW', 'BURGER/KRW', 'DOGE/KRW', 'KSM/KRW', 'CTK/KRW', 'XYM/KRW', 'BNB/KRW', 'SUN/KRW', 'XEC/KRW', 'PCI/KRW', 'SOL/KRW']
     # krwList=[]
@@ -123,20 +143,53 @@ def getPrice2():
     #     print(str(e))
     #     return jsonify(str(e))
 
-    bithumb = ccxt.bithumb()
-    bithumb_db = bithumb.fetch_ticker(symbol='BTC/KRW',params={})
-    print(bithumb_db)
-    BTCList = []
-    Bithumb_T = (bithumb_db['timestamp'])
-    Bithumb_P = (bithumb_db['last'])
+    # bithumb = ccxt.bithumb()
+    # bithumb_db = bithumb.fetch_ticker(symbol='BTC/KRW',params={})
+    # print(bithumb_db)
+    # BTCList = []
+    # Bithumb_T = (bithumb_db['timestamp'])
+    # Bithumb_P = (bithumb_db['last'])
 
-    Bithumb = {'trade_timestamp':Bithumb_T,'trade_price':Bithumb_P}
+    # Bithumb = {'trade_timestamp':Bithumb_T,'trade_price':Bithumb_P}
     
-    dbModule.execute("INSERT INTO Bithumb_bitcoin_price_tx(time_stamp, price) VALUES('{0}', '{1}');".format(Bithumb['trade_timestamp'], Bithumb['trade_price']))
+    # dbModule.execute("INSERT INTO Bithumb_bitcoin_price_tx(time_stamp, price) VALUES('{0}', '{1}');".format(Bithumb['trade_timestamp'], Bithumb['trade_price']))
         
-    BTCList.append(Bithumb)
+    # BTCList.append(Bithumb)
     
-    dbModule.commit();
+    # dbModule.commit();
+        
+    # try:
+    #     return json.dumps(BTCList)
+    # except Exception as e:
+    #     print(str(e))
+            
+    #     return jsonify(str(e))
+
+   
+    
+
+# 코인원 OPEN
+@app.route('/coinone-openapi',methods=['GET'])
+def getPrice3():
+    coinone= ccxt.coinone()
+    keyList = ['BTC/KRW','ETH/KRW']
+    krwList = []
+
+    for i in range(len(keyList)):
+        if '/KRW' in keyList[i]:
+            krwList.append(keyList[i])
+
+    coinone_db = coinone.fetch_tickers(symbols=krwList,params={})
+    print(coinone_db)
+    BTCList = []
+
+    for i in range(len(krwList)):
+        name = krwList[i]
+        Coinone_T = (coinone_db[name]['timestamp'])
+        Coinone_P = (coinone_db[name]['info']['last'])
+
+        Coinone = {'trade_timestamp':Coinone_T,'trade_price':Coinone_P}
+        BTCList.append(Coinone)
         
     try:
         return json.dumps(BTCList)
@@ -145,12 +198,7 @@ def getPrice2():
             
         return jsonify(str(e))
 
-   
-    
-
-# 코인원 OPEN
-@app.route('/coinone-openapi',methods=['GET'])
-def getPrice3():
+    '''
     # coinone = ccxt.coinone()
     # keyList = ['XEC/KRW', 'DOGE/KRW', 'FIS/KRW', 'CRO/KRW', 'LIT/KRW', 'MEGA/KRW', 'TVK/KRW', 'PHA/KRW', 'ICX/KRW', 'UNI/KRW', 'FIL/KRW', 'ATT/KRW', 'LZM/KRW', 'MLK/KRW', 'POD/KRW', 'CAD/KRW', 'VIVI/KRW', 'TRIX/KRW', 'GRT/KRW', 'TOROCUS/KRW', 'RUSH/KRW', '1INCH/KRW', 'QTBK/KRW', 'FLOW/KRW', 'CBK/KRW', 'CELEB/KRW', 'CBANK/KRW', 'LINA/KRW', 'KSP/KRW', 'MIR/KRW', 'HANDY/KRW', 'BMP/KRW', 'ORC/KRW', 'DVI/KRW', 'PICA/KRW', 'MVC/KRW', 'BEL/KRW', 'TMC/KRW', 'TEN/KRW', 'CKB/KRW', 'DIA/KRW', 'CTSI/KRW', 'STND/KRW', 'SXP/KRW', 'KSM/KRW', 'IPX/KRW', 'VSYS/KRW', 'MAP/KRW', 'BZRX/KRW', 'NEST/KRW', 'SIX/KRW', 'KAI/KRW', 'CRV/KRW', 'DODO/KRW', 'UMA/KRW', 'KLAY/KRW', 'TMTG/KRW', 'JST/KRW', 'SHOW/KRW', 'BORA/KRW', 'GOM2/KRW', 'FET/KRW', 'MCH/KRW', 'LINK/KRW', 'COS/KRW', 'LBXC/KRW', 'ISDT/KRW', 'BNT/KRW', 'BAL/KRW', 'XPN/KRW', 'AOA/KRW', 'HIBS/KRW', 'IOTX/KRW', 'CLV/KRW', 'DRM/KRW', 'PCI/KRW', 'AAVE/KRW', 'MSB/KRW', 'BAAS/KRW', 'SUN/KRW', 'UOS/KRW', 'KAVA/KRW', 'ARPA/KRW', 'MNR/KRW', 'HUM/KRW', 'Soda Coin/KRW', 'AUCTION/KRW', 'BNA/KRW', 'PROM/KRW', 'ANC/KRW', 'KSC/KRW', 'PIB/KRW', 'NFUP/KRW', 'REDI/KRW', 'DRC/KRW', 'ABL/KRW', 'ISR/KRW', 'STPL/KRW', 'FLETA/KRW', 'SKLAY/KRW', 'BAT/KRW', 'LUNA/KRW', 'AIP/KRW', 'NEO/KRW', 'ASM/KRW', 'DAD/KRW', 'HINT/KRW', 'SAND/KRW', 'EGG/KRW', 'STPT/KRW', 'AMO/KRW', 'SNX/KRW', 'TRCL/KRW', 'IDV/KRW', 'MATIC/KRW', 'KDAG/KRW', 'TOMOE/KRW', 'BSV/KRW', 'BTT/KRW', 'CAMP/KRW', 'DOT/KRW', 'PXL/KRW', 'XLM/KRW', 'TEMCO/KRW', 'BIOT/KRW', 'ADA/KRW', 'DVX/KRW', 'BTG/KRW', 'LUA/KRW', 'LTC/KRW', 'QTCON/KRW', 'MOV/KRW', 'IOTA/KRW', 'SOBA/KRW', 'PURE/KRW', 'RNX/KRW', 'DATA/KRW', 'TOM/KRW', 'EXE/KRW', 'ASTA/KRW', 'ZRX/KRW', 'BCH/KRW', 'IBP/KRW', 'KNC/KRW', 'ATOM/KRW', 'ANKR/KRW', 'TIP/KRW', 'ETC/KRW', 'ETH/KRW', 'BTC/KRW', 'SUSHI/KRW', 'DUCATO/KRW', 'INJ/KRW', 'AXS/KRW', 'FRONT/KRW', 'ALPHA/KRW', 'SRM/KRW', 'FTT/KRW', 'ONX/KRW', 'HARD/KRW', 'HOT/KRW', 'OGN/KRW', 'MBL/KRW', 'STAKE/KRW', 'GAS/KRW', 'BAND/KRW', 'ORBS/KRW', 'ONG/KRW', 'CLB/KRW', 'TRX/KRW', 'ZIL/KRW', 'AXL/KRW', 'QTUM/KRW', 'EOS/KRW', 'ONT/KRW', 'XTZ/KRW', 'XRP/KRW', 'WNCG/KRW', 'SOL/KRW', 'SKU/KRW', 'AVAX/KRW', 'BASIC/KRW', 'DON/KRW', 'MTS/KRW', 'BFC/KRW', 'ACH/KRW', 'GET/KRW', 'COMP/KRW', 'KRT/KRW', 'MTA/KRW', 'OMG/KRW', 'REN/KRW', 'WIKEN/KRW', 'CRU/KRW']
     # krwList = []
@@ -179,27 +227,7 @@ def getPrice3():
     # except Exception as e:
     #     print(str(e))
     #     return jsonify(str(e))
-    coinone= ccxt.coinone()
-    coinone_db = coinone.fetch_ticker(symbol='BTC/KRW',params={})
-
-    BTCList = []
-    Coinone_T = (coinone_db['timestamp'])
-    Coinone_P = (coinone_db['info']['last'])
-
-    Coinone = {'trade_timestamp':Coinone_T,'trade_price':Coinone_P}
-    
-    dbModule.execute("INSERT INTO Coinone_bitcoin_price_tx(time_stamp, price) VALUES('{0}', '{1}');".format(Coinone['trade_timestamp'], Coinone['trade_price']))
-        
-    BTCList.append(Coinone)
-    
-    dbModule.commit();
-        
-    try:
-        return json.dumps(BTCList)
-    except Exception as e:
-        print(str(e))
-            
-        return jsonify(str(e))
+'''
 
 
 #업비트 Open
@@ -219,20 +247,21 @@ def getPrice4():
 
     for i in range(len(krwList)):
         name = krwList[i]
-    
+
+        UPbit_M = (upbit_db[name]['info']['market'])
         UPbit_T = (upbit_db[name]['info']['trade_timestamp'])
         UPbit_P = (upbit_db[name]['info']['trade_price'])
 
-        Upbit = {'trade_timestamp':UPbit_T,'trade_price':UPbit_P}
+        Upbit = {'market':UPbit_M, 'trade_timestamp':UPbit_T,'trade_price':UPbit_P}
 
         BTCList.append(Upbit)
 
-        try:
-            return json.dumps(BTCList)
-        except Exception as e:
-            print(str(e))
-            
-            return jsonify(str(e))
+    try:
+        return json.dumps(BTCList)
+    except Exception as e:
+        print(str(e))
+        
+        return jsonify(str(e))
     
     '''전체 목록 가져오는 경우'''
     # keyList = ['1INCH/BTC', 'AAVE/BTC', 'ADA/BTC', 'AERGO/BTC', 'AHT/BTC', 'ALGO/BTC', 'ANKR/BTC', 'AQT/BTC', 'ARDR/BTC', 'ARK/BTC', 'ATOM/BTC', 'AUCTION/BTC', 'AXS/BTC', 'BASIC/BTC', 'BAT/BTC', 'BCH/BTC', 'BFC/BTC', 'BNT/BTC', 'BORA/BTC', 'BSV/BTC', 'BTT/BTC', 'CBK/BTC', 'CELO/BTC', 'CHR/BTC', 'CHZ/BTC', 'COMP/BTC', 'CRO/BTC', 'CRV/BTC', 'CTSI/BTC', 'CVC/BTC', 'DAD/BTC', 'DAI/BTC', 'DAWN/BTC', 'DENT/BTC', 'DGB/BTC', 'DKA/BTC', 'DNT/BTC', 'DOGE/BTC', 'DOT/BTC', 'ELF/BTC', 'ENJ/BTC', 'EOS/BTC', 'ETC/BTC', 'ETH/BTC', 'FCT2/BTC', 'FIL/BTC', 'FLOW/BTC', 'FOR/BTC', 'FX/BTC', 'GLM/BTC', 'GO/BTC', 'GRS/BTC', 'GRT/BTC', 'GXC/BTC', 'HBD/BTC', 'HIVE/BTC', 'HUM/BTC', 'HUNT/BTC', 'INJ/BTC', 'IOST/BTC', 'IOTX/BTC', 'IQ/BTC', 'JST/BTC', 'JUV/BTC', 'KAVA/BTC', 'LINA/BTC', 'LINK/BTC', 'LOOM/BTC', 'LRC/BTC', 'LSK/BTC', 'LTC/BTC', 'LUNA/BTC', 'MANA/BTC', 'MARO/BTC', 'MASK/BTC', 'MATIC/BTC', 'MED/BTC', 'META/BTC', 'MFT/BTC', 'MKR/BTC', 'MLK/BTC', 'MOC/BTC', 'MTL/BTC', 'MVL/BTC', 'NEAR/BTC', 'NKN/BTC', 'NMR/BTC', 'NU/BTC', 'OBSR/BTC', 'OGN/BTC', 'OMG/BTC', 'ONIT/BTC', 'ORBS/BTC', 'OXT/BTC', 'PCI/BTC', 'PLA/BTC', 'POLY/BTC', 'POWR/BTC', 'PROM/BTC', 'PSG/BTC', 'PUNDIX/BTC', 'QTCON/BTC', 'QTUM/BTC', 'REP/BTC', 'RFR/BTC', 'RLC/BTC', 'RSR/BTC', 'RVN/BTC', 'SAND/BTC', 'SBD/BTC', 'SC/BTC', 'SNT/BTC', 'SNX/BTC', 'SOL/BTC', 'SOLVE/BTC', 'SRM/BTC', 'SSX/BTC', 'STEEM/BTC', 'STMX/BTC', 'STORJ/BTC', 'STPT/BTC', 'STRAX/BTC', 'STRK/BTC', 'STX/BTC', 'SUN/BTC', 'SXP/BTC', 'Tokamak Network/BTC', 'TRX/BTC', 'TUSD/BTC', 'UNI/BTC', 'UPP/BTC', 'USDP/BTC', 'VAL/BTC', 'VET/BTC', 'WAVES/BTC', 'WAXP/BTC', 'XEM/BTC', 'XLM/BTC', 'XRP/BTC', 'XTZ/BTC', 'ZIL/BTC', 'ZRX/BTC', '1INCH/KRW', 'AAVE/KRW', 'ADA/KRW', 'AERGO/KRW', 'AHT/KRW', 'ANKR/KRW', 'AQT/KRW', 'ARDR/KRW', 'ARK/KRW', 'ATOM/KRW', 'AXS/KRW', 'BAT/KRW', 'BCH/KRW', 'BORA/KRW', 'BSV/KRW', 'BTC/KRW', 'BTG/KRW', 'BTT/KRW', 'CBK/KRW', 'CHZ/KRW', 'CRE/KRW', 'CRO/KRW', 'CVC/KRW', 'DAWN/KRW', 'DKA/KRW', 'DOGE/KRW', 'DOT/KRW', 'ELF/KRW', 'ENJ/KRW', 'EOS/KRW', 'ETC/KRW', 'ETH/KRW', 'FCT2/KRW', 'FLOW/KRW', 'GAS/KRW', 'GLM/KRW', 'GRS/KRW', 'HBAR/KRW', 'HIVE/KRW', 'HUM/KRW', 'HUNT/KRW', 'ICX/KRW', 'IOST/KRW', 'IOTA/KRW', 'IQ/KRW', 'JST/KRW', 'KAVA/KRW', 'KNC/KRW', 'LINK/KRW', 'LOOM/KRW', 'LSK/KRW', 'LTC/KRW', 'MANA/KRW', 'MATIC/KRW', 'MBL/KRW', 'MED/KRW', 'META/KRW', 'MFT/KRW', 'MLK/KRW', 'MOC/KRW', 'MTL/KRW', 'MVL/KRW', 'NEO/KRW', 'NU/KRW', 'OMG/KRW', 'ONG/KRW', 'ONT/KRW', 'ORBS/KRW', 'PLA/KRW', 'POLY/KRW', 'POWR/KRW', 'PUNDIX/KRW', 'QKC/KRW', 'QTUM/KRW', 'REP/KRW', 'RFR/KRW', 'SAND/KRW', 'SBD/KRW', 'SC/KRW', 'SNT/KRW', 'SOL/KRW', 'SRM/KRW', 'SSX/KRW', 'STEEM/KRW', 'STMX/KRW', 'STORJ/KRW', 'STPT/KRW', 'STRAX/KRW', 'STRK/KRW', 'STX/KRW', 'SXP/KRW', 'TFUEL/KRW', 'THETA/KRW', 'Tokamak Network/KRW', 'TRX/KRW', 'TT/KRW', 'UPP/KRW', 'VET/KRW', 'WAVES/KRW', 'WAXP/KRW', 'XEC/KRW', 'XEM/KRW', 'XLM/KRW', 'XRP/KRW', 'XTZ/KRW', 'ZIL/KRW', 'ZRX/KRW', 'ADA/USDT', 'BAT/USDT', 'BCH/USDT', 'BTC/USDT', 'DGB/USDT', 'DOGE/USDT', 'ETC/USDT', 'ETH/USDT', 'LTC/USDT', 'OMG/USDT', 'RVN/USDT', 'SC/USDT', 'TRX/USDT', 'TUSD/USDT', 'XRP/USDT', 'ZRX/USDT']
