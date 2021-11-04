@@ -229,6 +229,7 @@ def getPrice6():
             krwList.append(keyList[i])
         
     coinone_db = coinone.fetch_tickers(symbols=krwList,params={})
+
     BTCList = []
 
     for i in range(len(krwList)):
@@ -263,7 +264,7 @@ def getPrice4():
             krwList.append(keyList[i])
 
     upbit_db = upbit.fetch_tickers(symbols=krwList,params={})
-    print(upbit_db)
+    
     BTCList = []
 
     for i in range(len(krwList)):
@@ -296,18 +297,19 @@ def getPrice5():
         if '/KRW' in keyList[i]:
             krwList.append(keyList[i])
     upbit_db = upbit.fetch_tickers(symbols=krwList,params={})
+    print(upbit_db)
     BTCList = []
 
     for i in range(len(krwList)):
         name = krwList[i]
 
         UPbit_M = (upbit_db[name]['info']['market'])
-        UPbit_C = (upbit_db[name]['info']['change_rate'])
+        UPbit_C = (upbit_db[name]['info']['signed_change_rate'])
         UPbit_T = (upbit_db[name]['info']['trade_timestamp'])
         UPbit_P = (upbit_db[name]['info']['trade_price'])
         UPbit_V = (upbit_db[name]['info']['trade_volume']) 
 
-        Upbit = {'market':UPbit_M ,'change_rate':UPbit_C,'trade_timestamp':UPbit_T,'trade_price':UPbit_P,'trade_volume':UPbit_V}
+        Upbit = {'market':UPbit_M ,'signed_change_rate':UPbit_C,'trade_timestamp':UPbit_T,'trade_price':UPbit_P,'trade_volume':UPbit_V}
         BTCList.append(Upbit)
 
     try:
