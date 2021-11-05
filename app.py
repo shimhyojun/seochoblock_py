@@ -360,6 +360,20 @@ def Upbit_Apidb(user_id):
 
     return Response(json.dumps(balance), mimetype='application/json')
 
+# 업비트 (POST -> accesskey + secret key)
+@app.route('/upbit-privateapi',methods=['POST'])
+def Upbit_Apidb_Post():
+    print(request.form['accessKey'])
+    upbit = ccxt.upbit(config={ 
+        'apiKey': request.form['accessKey'],        
+        'secret': request.form['privateKey']         
+        }
+    )
+    balance= upbit.fetch_balance()
+    print(balance)
+
+    return Response(json.dumps(balance), mimetype='application/json')
+
 # 바이낸스
 @app.route('/binance-privateapi/<user_id>',methods=['GET'])
 def Binance_Apidb(user_id):
